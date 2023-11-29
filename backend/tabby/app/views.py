@@ -45,9 +45,8 @@ class AppDistView(APIView):
     def get(self, request, version=None, path=None, format=None):
         fs = fsspec.filesystem(urlparse(settings.APP_DIST_STORAGE).scheme)
         url = f"{settings.APP_DIST_STORAGE}/{version}/{path}"
-        if isinstance(fs, LocalFileSystem):
-            if not fs.exists(url):
-                return HttpResponseNotFound()
-            return FileResponse(fs.open(url), filename=os.path.basename(url))
-        else:
+        if not isinstance(fs, LocalFileSystem):
             return HttpResponseRedirect(fs.url(url))
+        if not fs.exists(url):
+            return HttpResponseNotFound()
+        return FileResponse(fs.open(url), filename=os.path.basename(url))

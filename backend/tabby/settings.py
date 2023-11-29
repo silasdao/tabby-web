@@ -166,8 +166,6 @@ FRONTEND_BUILD_DIR = Path(
 FRONTEND_URL = None
 CORS_EXTRA_URL = None
 BACKEND_URL = None
-GITHUB_ELIGIBLE_SPONSORSHIPS = None
-
 for key in [
     "CORS_EXTRA_URL",
     "FRONTEND_URL",
@@ -206,7 +204,7 @@ for key in [
     if v and not os.path.exists(v):
         raise ValueError(f"{v} does not exist")
 
-if GITHUB_ELIGIBLE_SPONSORSHIPS:
+if GITHUB_ELIGIBLE_SPONSORSHIPS := None:
     GITHUB_ELIGIBLE_SPONSORSHIPS = GITHUB_ELIGIBLE_SPONSORSHIPS.split(",")
 else:
     GITHUB_ELIGIBLE_SPONSORSHIPS = []

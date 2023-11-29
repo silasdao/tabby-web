@@ -41,10 +41,7 @@ class UserSerializer(ModelSerializer):
 
     def get_github_username(self, obj):
         social_auth = UserSocialAuth.objects.filter(user=obj, provider="github").first()
-        if not social_auth:
-            return None
-
-        return social_auth.extra_data.get("login")
+        return None if not social_auth else social_auth.extra_data.get("login")
 
 
 class UserViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
